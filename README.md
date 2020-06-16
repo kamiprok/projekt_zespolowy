@@ -1,2 +1,2 @@
-# projekt_zespolowy
+# Projekt Zespołowy Grupa 1
 tbd
