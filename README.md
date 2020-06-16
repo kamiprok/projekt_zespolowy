@@ -27,30 +27,30 @@ nazwa projektu: projekt bankomat
 		bank(opcjonalnie):
 			
 
-wytwarzanie oprogramowania:
-	model kaskadowy:
-		analiza -> projektowanie -> implementacja(developement) -> testowanie
-	model cykliczny:
+	wytwarzanie oprogramowania:
+		model kaskadowy:
+			analiza -> projektowanie -> implementacja(developement) -> testowanie
+		model cykliczny:
 	
 				analizowanie
-				 
+
 		testowanie			projektowanie
-		
+
 				implementacja
 
-4 diagramy:
-	diagram use case:
-		system:
-			bankomat
-		2 aktorow:
-			klient
-			bank
-		polecenia:
-			autoryzuj sie		extend
-								<----	wyplac pieniadze
-								<----	sprawdz stan konta
-								<----	wyswietl historie
-								<----	wykonaj przelew
+	4 diagramy:
+		diagram use case:
+			system:
+				bankomat
+			2 aktorow:
+				klient
+				bank
+			polecenia:
+				autoryzuj sie		extend
+									<----	wyplac pieniadze
+									<----	sprawdz stan konta
+									<----	wyswietl historie
+									<----	wykonaj przelew
 
 	diagram activity: ogolnie
 	diagram sequence: 1 sekwencja albo olac
@@ -77,4 +77,4 @@ wytwarzanie oprogramowania:
 	
 	dodać 2 tabele
 	
-zrobic print screeny tabele, kod, uml, lista kto co robi
+	zrobic print screeny tabele, kod, uml, lista kto co robi
