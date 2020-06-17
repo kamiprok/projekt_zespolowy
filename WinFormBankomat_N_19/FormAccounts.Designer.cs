@@ -50,14 +50,14 @@
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.labErrorInfo = new System.Windows.Forms.Label();
+            this.button4 = new System.Windows.Forms.Button();
+            this.button3 = new System.Windows.Forms.Button();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
-            this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
             this.txtPeselDepo = new System.Windows.Forms.TextBox();
             this.txtAmountDepo = new System.Windows.Forms.TextBox();
-            this.button3 = new System.Windows.Forms.Button();
-            this.button4 = new System.Windows.Forms.Button();
-            this.labErrorInfo = new System.Windows.Forms.Label();
             this.bankAccountsBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.customersBindingSource = new System.Windows.Forms.BindingSource(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
@@ -313,6 +313,34 @@
             this.tabPage3.Text = "Wpłata/Wypłata u bankiera";
             this.tabPage3.UseVisualStyleBackColor = true;
             // 
+            // labErrorInfo
+            // 
+            this.labErrorInfo.AutoSize = true;
+            this.labErrorInfo.Location = new System.Drawing.Point(9, 15);
+            this.labErrorInfo.Name = "labErrorInfo";
+            this.labErrorInfo.Size = new System.Drawing.Size(0, 13);
+            this.labErrorInfo.TabIndex = 3;
+            // 
+            // button4
+            // 
+            this.button4.Location = new System.Drawing.Point(443, 88);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(154, 33);
+            this.button4.TabIndex = 2;
+            this.button4.Text = "Wypłać";
+            this.button4.UseVisualStyleBackColor = true;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
+            // 
+            // button3
+            // 
+            this.button3.Location = new System.Drawing.Point(443, 46);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(154, 33);
+            this.button3.TabIndex = 1;
+            this.button3.Text = "Wpłać";
+            this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
+            // 
             // tableLayoutPanel2
             // 
             this.tableLayoutPanel2.ColumnCount = 2;
@@ -330,17 +358,6 @@
             this.tableLayoutPanel2.Size = new System.Drawing.Size(382, 75);
             this.tableLayoutPanel2.TabIndex = 0;
             // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.label5.Location = new System.Drawing.Point(2, 0);
-            this.label5.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(70, 24);
-            this.label5.TabIndex = 1;
-            this.label5.Text = "PESEL";
-            // 
             // label6
             // 
             this.label6.AutoSize = true;
@@ -351,6 +368,17 @@
             this.label6.Size = new System.Drawing.Size(61, 24);
             this.label6.TabIndex = 2;
             this.label6.Text = "Kwota";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.label5.Location = new System.Drawing.Point(2, 0);
+            this.label5.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(70, 24);
+            this.label5.TabIndex = 1;
+            this.label5.Text = "PESEL";
             // 
             // txtPeselDepo
             // 
@@ -371,34 +399,6 @@
             this.txtAmountDepo.Name = "txtAmountDepo";
             this.txtAmountDepo.Size = new System.Drawing.Size(187, 26);
             this.txtAmountDepo.TabIndex = 7;
-            // 
-            // button3
-            // 
-            this.button3.Location = new System.Drawing.Point(443, 46);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(154, 33);
-            this.button3.TabIndex = 1;
-            this.button3.Text = "Wpłać";
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
-            // 
-            // button4
-            // 
-            this.button4.Location = new System.Drawing.Point(443, 88);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(154, 33);
-            this.button4.TabIndex = 2;
-            this.button4.Text = "Wypłać";
-            this.button4.UseVisualStyleBackColor = true;
-            this.button4.Click += new System.EventHandler(this.button4_Click);
-            // 
-            // labErrorInfo
-            // 
-            this.labErrorInfo.AutoSize = true;
-            this.labErrorInfo.Location = new System.Drawing.Point(9, 15);
-            this.labErrorInfo.Name = "labErrorInfo";
-            this.labErrorInfo.Size = new System.Drawing.Size(0, 13);
-            this.labErrorInfo.TabIndex = 3;
             // 
             // bankAccountsBindingSource
             // 
