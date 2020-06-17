@@ -13,7 +13,8 @@ namespace WinFormBankomat_N_19
         public int CustomerID { get; private set; }
         public string AccountNo { get; set; }
         public double Balance { get; private set; }
-        public Customer Customer { get; set; }
+
+        public virtual Customer Customer { get; set; }
 
         public void WithdrawMoney(int amount)
         {
