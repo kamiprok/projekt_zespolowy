@@ -20,8 +20,9 @@ namespace WinFormBankomat_N_19
         public string CardType { get; private set; }
         public int FailedLogins { get; set; }
         public bool Restricted { get; private set; }
-        public Customer Customer { get; set; }
-        public BankAccount BankAccount { get; set; }
+
+        public virtual Customer Customer { get; set; }
+        public virtual BankAccount BankAccount { get; set; }
 
         public void VerifyCardNo()
         {
