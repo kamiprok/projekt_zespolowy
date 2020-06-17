@@ -37,25 +37,55 @@ namespace WinFormBankomat_N_19
 
         private void btnSearchID_Click(object sender, EventArgs e)
         {
-            long pesel = Convert.ToInt64(textBox1.Text);
-            BankAccount account = new BankAccount();
-            labID.Text = account.GetAccountID(pesel).ToString();
+            long pesel;
+            bool success = Int64.TryParse(textBox1.Text, out pesel);
+            if (success)
+            {
+                pesel = Convert.ToInt64(textBox1.Text);
+                BankAccount account = new BankAccount();
+                labID.Text = account.GetAccountID(pesel).ToString();
+                if(labID.Text == "-1")
+                {
+                    labID.Text = "brak klienta";
+                }
+                else
+                {
+                    labAccountInfo.Text = "brak polaczenia z baza danych";
+                }
+            }
+            else
+            {
+                textBox1.Text = "podaj numer !";
+            }
+
+            //long pesel = Convert.ToInt64(textBox1.Text);
+            //BankAccount account = new BankAccount();
+            //labID.Text = account.GetAccountID(pesel).ToString();
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-            long pesel = Convert.ToInt64(textBox1.Text);
-            BankAccount account = new BankAccount();
-            int wynik = account.GetAccountInfo(pesel);
-            if (wynik == 1)
+            long pesel;
+            bool success = Int64.TryParse(textBox1.Text, out pesel);
+            if (success)
             {
-                labAccountInfo.Text = "Customer\nName = " + account.Customer.Name + "\nSurname = " + account.Customer.Surname +
-                    "\n PersonalID = " + account.Customer.PersonalID.ToString() + "\nAccountNo = " + account.AccountNo +
-                    "\nBalance = " + account.Balance.ToString();
+                pesel = Convert.ToInt64(textBox1.Text);
+                BankAccount account = new BankAccount();
+                int wynik = account.GetAccountInfo(pesel);
+                if (wynik == 1)
+                {
+                    labAccountInfo.Text = "Customer\nName = " + account.Customer.Name + "\nSurname = " + account.Customer.Surname +
+                        "\n PersonalID = " + account.Customer.PersonalID.ToString() + "\nAccountNo = " + account.AccountNo +
+                        "\nBalance = " + account.Balance.ToString();
+                }
+                else if (wynik == -1) labAccountInfo.Text = "brak klienta";
+                else labAccountInfo.Text = "brak połączenia z bazą danych";
             }
-            else if (wynik == -1) labAccountInfo.Text = "brak klienta";
-            else labAccountInfo.Text = "brak połączenia z bazą danych";
-        }
+            else
+            {
+                textBox1.Text = "podaj numer !";
+            }
+        } 
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -109,7 +139,7 @@ namespace WinFormBankomat_N_19
 
         private void RefreshDataGridView()
         {
-            sqlCommand.CommandText = "select * from BankAccounts";
+            sqlCommand.CommandText = "select AccountNo, Balance, c.PersonalID from BankAccounts b left join Customers c ON b.CustomerID = c.CustomerID";
             dataGridView1.DataSource = dal.selectData(sqlCommand);
         }
 

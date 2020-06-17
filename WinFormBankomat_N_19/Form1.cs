@@ -24,24 +24,50 @@ namespace WinFormBankomat_N_19
 
         private void btnSearchID_Click(object sender, EventArgs e)
         {
-            long pesel = Convert.ToInt64(txtBoxPesel.Text);
-            Customer customer = new Customer();
-            labID.Text = customer.getCustomerID(pesel).ToString();
+            long pesel;
+            bool success = Int64.TryParse(txtBoxPesel.Text, out pesel);
+            if (success)
+            {
+                pesel = Convert.ToInt64(txtBoxPesel.Text);
+                BankAccount account = new BankAccount();
+                labID.Text = account.GetAccountID(pesel).ToString();
+                Customer customer = new Customer();
+                int wynik = customer.getCustomerInfo(pesel);
+                if (wynik == -1) labID.Text = "brak klienta";
+                else labCustomerInfo.Text = "brak połączenia z bazą danych";
+            }
+            else
+            {
+                txtBoxPesel.Text = "podaj numer !";
+            }
+
+            //long pesel = Convert.ToInt64(txtBoxPesel.Text);
+            //Customer customer = new Customer();
+            //labID.Text = customer.getCustomerID(pesel).ToString();
         }
 
         private void btnSearchCustomerInfo_Click(object sender, EventArgs e)
         {
-            long pesel = Convert.ToInt64(txtBoxPesel.Text);
-            Customer customer = new Customer();
-            int wynik = customer.getCustomerInfo(pesel);
-            if (wynik == 1)
+            long pesel;
+            bool success = Int64.TryParse(txtBoxPesel.Text, out pesel);
+            if (success)
             {
-                labCustomerInfo.Text = "Customer\nName = " + customer.Name + "\nSurname = " + customer.Surname +
-                    "\nPhone = " + customer.PhoneNo.ToString() + "\nAddress = " + customer.Address +
-                    "\nPersonalID = " + customer.PersonalID.ToString();
+                pesel = Convert.ToInt64(txtBoxPesel.Text);
+                Customer customer = new Customer();
+                int wynik = customer.getCustomerInfo(pesel);
+                if (wynik == 1)
+                {
+                    labCustomerInfo.Text = "Customer\nName = " + customer.Name + "\nSurname = " + customer.Surname +
+                        "\nPhone = " + customer.PhoneNo.ToString() + "\nAddress = " + customer.Address +
+                        "\nPersonalID = " + customer.PersonalID.ToString();
+                }
+                else if (wynik == -1) labID.Text = "brak klienta";
+                else labCustomerInfo.Text = "brak połączenia z bazą danych";
             }
-            else if (wynik == -1) labCustomerInfo.Text = "brak klienta";
-            else labCustomerInfo.Text = "brak połączenia z bazą danych";
+            else
+            {
+                txtBoxPesel.Text = "podaj numer !";
+            }
         }
 
         private void btnInsertCustomer_Click(object sender, EventArgs e)
