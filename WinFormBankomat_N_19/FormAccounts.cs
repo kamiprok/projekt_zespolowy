@@ -37,9 +37,22 @@ namespace WinFormBankomat_N_19
 
         private void btnSearchID_Click(object sender, EventArgs e)
         {
-            long pesel = Convert.ToInt64(textBox1.Text);
-            BankAccount account = new BankAccount();
-            labID.Text = account.GetAccountID(pesel).ToString();
+            long pesel;
+            bool success = Int64.TryParse(textBox1.Text, out pesel);
+            if (success)
+            {
+                pesel = Convert.ToInt64(textBox1.Text);
+                BankAccount account = new BankAccount();
+                labID.Text = account.GetAccountID(pesel).ToString();
+            }
+            else
+            {
+                textBox1.Text = "podaj numer !";
+            }
+
+            //long pesel = Convert.ToInt64(textBox1.Text);
+            //BankAccount account = new BankAccount();
+            //labID.Text = account.GetAccountID(pesel).ToString();
         }
 
         private void button2_Click(object sender, EventArgs e)
