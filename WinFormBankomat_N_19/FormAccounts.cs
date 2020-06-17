@@ -41,17 +41,12 @@ namespace WinFormBankomat_N_19
             bool success = Int64.TryParse(textBox1.Text, out pesel);
             if (success)
             {
-                pesel = Convert.ToInt64(textBox1.Text);
+                //pesel = Convert.ToInt64(textBox1.Text);
                 BankAccount account = new BankAccount();
                 labID.Text = account.GetAccountID(pesel).ToString();
-                if(labID.Text == "-1")
-                {
-                    labID.Text = "brak klienta";
-                }
-                else
-                {
-                    labAccountInfo.Text = "brak polaczenia z baza danych";
-                }
+                //labAccountInfo.Text = labID.Text == "-1" ? "brak klienta" : "brak polaczenia z baza danych";
+                if (labID.Text == "-1") labID.Text = "brak klienta";
+                else if (labID.Text == "-2") labID.Text = "brak polaczenia z baza danych";
             }
             else
             {
@@ -69,7 +64,7 @@ namespace WinFormBankomat_N_19
             bool success = Int64.TryParse(textBox1.Text, out pesel);
             if (success)
             {
-                pesel = Convert.ToInt64(textBox1.Text);
+                //pesel = Convert.ToInt64(textBox1.Text);
                 BankAccount account = new BankAccount();
                 int wynik = account.GetAccountInfo(pesel);
                 if (wynik == 1)
