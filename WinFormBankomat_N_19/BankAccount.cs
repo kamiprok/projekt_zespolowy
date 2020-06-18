@@ -28,15 +28,16 @@ namespace WinFormBankomat_N_19
 
         public double CheckBalance()
         {
+
             return Balance;
         }
 
         public int GetAccountID(long pesel)
         {
-            string query = "select AccountID from BankAccounts b left join Customers c on c.CustomerID = b.CustomerID where c.PersonalID = @pesel";
+            string query = "select AccountID, Balance from BankAccounts";
             SqlCommand sqlCommand = new SqlCommand();
             sqlCommand.CommandText = query;
-            sqlCommand.Parameters.AddWithValue("@pesel", pesel);
+            //sqlCommand.Parameters.AddWithValue("@pesel", pesel);
             DataAccessLayer dal = new DataAccessLayer();
 
             if (dal.connectionOpen())
@@ -45,7 +46,7 @@ namespace WinFormBankomat_N_19
                 if (reader.HasRows)
                 {
                     reader.Read(); // czyta 1 wiersz
-                    this.AccountID = Convert.ToInt32(reader[0].ToString());
+                    this.AccountID = Convert.ToInt32(reader[0].ToString());    
                     reader.Close();
                     dal.connectionClose();
                     return this.AccountID;
@@ -66,18 +67,19 @@ namespace WinFormBankomat_N_19
             sqlCommand.CommandText = query;
             sqlCommand.Parameters.AddWithValue("@pesel", pesel);
             DataAccessLayer dal = new DataAccessLayer();
-
+            Customer Customer = new Customer();
             if (dal.connectionOpen())
             {
                 SqlDataReader reader = dal.returnReader(sqlCommand);
                 if (reader.HasRows)
                 {
+                   
                     reader.Read();
-                    this.Customer.Name = reader[0].ToString();
-                    this.Customer.Surname = reader[1].ToString();
-                    this.Customer.PersonalID = Convert.ToInt64(reader[2].ToString());
-                    this.AccountNo = reader[3].ToString();
-                    this.Balance = Convert.ToDouble(reader[4].ToString());
+                    Customer.Name= reader[0].ToString();
+                    Customer.Surname = reader[1].ToString();
+                    Customer.PersonalID = Convert.ToInt64(reader[2].ToString());
+                    AccountNo = reader[3].ToString();
+                    Balance = Convert.ToDouble(reader[4].ToString());
                     reader.Close();
                     dal.connectionClose();
                     return 1; // konto zostało znalezione

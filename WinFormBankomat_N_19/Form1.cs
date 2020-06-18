@@ -28,13 +28,13 @@ namespace WinFormBankomat_N_19
             bool success = Int64.TryParse(txtBoxPesel.Text, out pesel);
             if (success)
             {
-                pesel = Convert.ToInt64(txtBoxPesel.Text);
+                //pesel = Convert.ToInt64(txtBoxPesel.Text);
                 BankAccount account = new BankAccount();
                 labID.Text = account.GetAccountID(pesel).ToString();
                 Customer customer = new Customer();
                 int wynik = customer.getCustomerInfo(pesel);
                 if (wynik == -1) labID.Text = "brak klienta";
-                else labCustomerInfo.Text = "brak połączenia z bazą danych";
+                else if(wynik == -2) labCustomerInfo.Text = "brak połączenia z bazą danych";
             }
             else
             {
@@ -52,7 +52,7 @@ namespace WinFormBankomat_N_19
             bool success = Int64.TryParse(txtBoxPesel.Text, out pesel);
             if (success)
             {
-                pesel = Convert.ToInt64(txtBoxPesel.Text);
+                //pesel = Convert.ToInt64(txtBoxPesel.Text);
                 Customer customer = new Customer();
                 int wynik = customer.getCustomerInfo(pesel);
                 if (wynik == 1)
@@ -96,6 +96,11 @@ namespace WinFormBankomat_N_19
             this.Hide();
             Bank b = new Bank();
             b.ShowDialog();
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }
