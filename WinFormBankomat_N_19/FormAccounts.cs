@@ -66,11 +66,13 @@ namespace WinFormBankomat_N_19
             {
                 //pesel = Convert.ToInt64(textBox1.Text);
                 BankAccount account = new BankAccount();
-                int wynik = account.GetAccountInfo(pesel);
+                Customer customer = new Customer();
+                int wynik2 = account.GetAccountInfo(pesel);
+                int wynik = customer.getCustomerInfo(pesel);
                 if (wynik == 1)
                 {
-                    labAccountInfo.Text = "Customer\nName = " + account.Customer.Name + "\nSurname = " + account.Customer.Surname +
-                        "\n PersonalID = " + account.Customer.PersonalID.ToString() + "\nAccountNo = " + account.AccountNo +
+                    labAccountInfo.Text = "Customer\nName = " + customer.Name + "\nSurname = " + customer.Surname +
+                        "\n PersonalID = " + customer.PersonalID.ToString() + "\nAccountNo = " + customer.ToString() +
                         "\nBalance = " + account.Balance.ToString();
                 }
                 else if (wynik == -1) labAccountInfo.Text = "brak klienta";

@@ -65,18 +65,19 @@ namespace WinFormBankomat_N_19
             sqlCommand.CommandText = query;
             sqlCommand.Parameters.AddWithValue("@pesel", pesel);
             DataAccessLayer dal = new DataAccessLayer();
-
+            Customer customer = new Customer();
+            BankAccount bank2 = new BankAccount();
             if (dal.connectionOpen())
             {
                 SqlDataReader reader = dal.returnReader(sqlCommand);
                 if (reader.HasRows)
                 {
                     reader.Read();
-                    this.Customer.Name = reader[0].ToString();
-                    this.Customer.Surname = reader[1].ToString();
-                    this.Customer.PersonalID = Convert.ToInt64(reader[2].ToString());
-                    this.AccountNo = reader[3].ToString();
-                    this.Balance = Convert.ToDouble(reader[4].ToString());
+                    customer.Name = reader[0].ToString();
+                    customer.Surname = reader[1].ToString();
+                    customer.PersonalID = Convert.ToInt64(reader[2].ToString());
+                    bank2.AccountNo = reader[3].ToString();
+                    bank2.Balance = Convert.ToDouble(reader[4].ToString());
                     reader.Close();
                     dal.connectionClose();
                     return 1; // konto zostało znalezione
