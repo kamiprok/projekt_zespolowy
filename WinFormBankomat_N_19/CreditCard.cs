@@ -2,11 +2,18 @@
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace WinFormBankomat_N_19
 {
+    class CardNotFoundException : Exception
+    {
+        public CardNotFoundException()
+        {
+        }
+    }
     class CreditCard
     {
         public int CardID { get; private set; }
@@ -19,10 +26,90 @@ namespace WinFormBankomat_N_19
         public int PIN { get; private set; }
         public string CardType { get; private set; }
         public int FailedLogins { get; set; }
+
+
         public bool Restricted { get; private set; }
 
         public virtual Customer Customer { get; set; }
         public virtual BankAccount BankAccount { get; set; }
+
+        public CreditCard()
+        {
+
+        }
+        public CreditCard(string cardNo)
+        {
+            string query = "select * from CreditCards where CardNo = @cardNo";
+            SqlCommand sqlCmd = new SqlCommand
+            {
+                CommandText = query
+            };
+            sqlCmd.Parameters.AddWithValue("@cardNo", cardNo);
+            DataAccessLayer dal = new DataAccessLayer();
+            if(dal.connectionOpen())
+            {
+                SqlDataReader reader = dal.returnReader(sqlCmd);
+                if (reader.HasRows)
+                {
+                    reader.Read();
+                    CardID = reader.GetInt32(0);
+                    CardNo = reader.GetString(1);
+                    ExpiredDate = reader.GetDateTime(2);
+                    AccountID = reader.GetInt32(3);
+                    CustomerID = reader.GetInt32(4);
+                    CVV = reader.GetInt32(5);
+                    CardHolder = reader.GetString(6);
+                    PIN = reader.GetInt32(7);
+                    CardType = reader.GetString(8);
+                    Restricted = reader.GetBoolean(9);
+                    FailedLogins = reader.GetInt32(10);
+                    reader.Close();
+                    dal.connectionClose();
+                }
+                else
+                {
+                    reader.Close();
+                    dal.connectionClose();
+                    throw new CardNotFoundException();
+                }
+            }
+        }
+
+        internal bool IsExpired()
+        {
+            return ExpiredDate < DateTime.Now;
+        }
+
+        public bool isRestricted()
+        {
+            return Restricted;
+        }
+        internal bool isPinInvalid(string pin)
+        {
+            return pin.Length == 0 || Convert.ToInt32(pin) != PIN;
+        }
+
+        internal void RecordFailedAccess()
+        {
+            FailedLogins += 1;
+            if(FailedLogins > 2)
+            {
+                Restricted = true;
+
+            }
+            DataAccessLayer dal = new DataAccessLayer();
+            if(dal.connectionOpen())
+            {
+                SqlCommand sqlCmd = new SqlCommand
+                {
+                    CommandText = "UPDATE CreditCards SET FailedLogins = FailedLogins + 1, Restricted = @restricted WHERE CardNo = @cardNo"
+                };
+                sqlCmd.Parameters.AddWithValue("@cardNo", CardNo);
+                sqlCmd.Parameters.AddWithValue("@restricted", Restricted);
+                dal.queryExecution(sqlCmd);
+            }
+            dal.connectionClose();
+        }
 
         public void VerifyCardNo()
         {
