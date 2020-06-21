@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using WinFormBankomat_N_19.Models;
 
 namespace WinFormBankomat_N_19
 {
@@ -15,6 +16,10 @@ namespace WinFormBankomat_N_19
     {
         private int _cardID;
         private int _accountID;
+
+        private static string WRONG_NOMINAL = "Bankomat obsługuje jedynie nominały 500,200,100,50,20 i 10";
+        private static string WRONG_AMOUNT = "Podana kwota jest nieprawidłowa!";
+        private static string OPERATION_ERROR = "Wystąpił błąd podczas realizacji transakcji, spróbuj ponownie";
 
         public BankomatWplatomat(int cardID)
         {
@@ -69,34 +74,29 @@ namespace WinFormBankomat_N_19
 
                 if (IsBankNote(withdrawAmount))
                 {
-                    double newBalance = Convert.ToDouble(CheckBalance()) - Convert.ToDouble(withdrawAmount);
-                    string query = "update BankAccounts SET Balance = @newBalance WHERE AccountID = @id";
-                    SqlCommand sqlCmd = new SqlCommand();
-                    sqlCmd.CommandText = query;
-                    sqlCmd.Parameters.AddWithValue("@newBalance", newBalance);
-                    sqlCmd.Parameters.AddWithValue("@id", _accountID);
-
-                    DataAccessLayer dal = new DataAccessLayer();
-                    if(dal.connectionOpen())
+                    int result = BankAccount.WithdrawMoney(withdrawAmount, _accountID, Convert.ToDouble(CheckBalance()));
+                    
+                    if(result == -1)
                     {
-                        dal.queryExecution(sqlCmd);
-                        dal.connectionClose();
+                        label6.ForeColor = Color.Red;
+                        label6.Text = OPERATION_ERROR;
                     }
-
+                    else
+                    {
+                        label6.ForeColor = Color.Black;
+                        label6.Text = "Wypłacono " + withdrawAmount;
+                    }
                     labelStanKonta.Text = CheckBalance();
-
-                    label6.Text = "Wypłacono " + withdrawAmount;
-                    label6.ForeColor = Color.Black;
                 }
                 else
                 {
-                    label6.Text = "Bankomat wypłaca jedynie nominały 500,200,100,50,20 i 10";
+                    label6.Text = WRONG_NOMINAL;
                     label6.ForeColor = Color.Red;
                 }
             }
             else
             {
-                label6.Text = "Podana kwota jest nieprawidłowa!";
+                label6.Text = WRONG_AMOUNT;
                 label6.ForeColor = Color.Red;
             }
         }
@@ -121,34 +121,29 @@ namespace WinFormBankomat_N_19
             {
                 if (IsBankNote(depositAmount))
                 {
-                    double newBalance = Convert.ToDouble(CheckBalance()) + Convert.ToDouble(depositAmount);
-                    string query = "update BankAccounts SET Balance = @newBalance WHERE AccountID = @id";
-                    SqlCommand sqlCmd = new SqlCommand();
-                    sqlCmd.CommandText = query;
-                    sqlCmd.Parameters.AddWithValue("@newBalance", newBalance);
-                    sqlCmd.Parameters.AddWithValue("@id", _accountID);
+                    int result = BankAccount.DepositMoney(depositAmount, _accountID, Convert.ToDouble(CheckBalance()));
 
-                    DataAccessLayer dal = new DataAccessLayer();
-                    if (dal.connectionOpen())
+                    if (result == -1)
                     {
-                        dal.queryExecution(sqlCmd);
-                        dal.connectionClose();
+                        label6.ForeColor = Color.Red;
+                        label6.Text = OPERATION_ERROR;
                     }
-
+                    else
+                    {
+                        label6.ForeColor = Color.Black;
+                        label6.Text = "Wpłacono " + depositAmount;
+                    }
                     labelStanKonta.Text = CheckBalance();
-
-                    label7.Text = "Wpłacono " + depositAmount;
-                    label7.ForeColor = Color.Black;
                 }
                 else
                 {
-                    label7.Text = "Do wpłatomatu można włożyć jedynie nominały 500,200,100,50,20 i 10";
+                    label7.Text = WRONG_NOMINAL;
                     label7.ForeColor = Color.Red;
                 }
             }
             else
             {
-                label7.Text = "Podana kwota jest nieprawidłowa!";
+                label7.Text = WRONG_AMOUNT;
                 label7.ForeColor = Color.Red;
             }
         }

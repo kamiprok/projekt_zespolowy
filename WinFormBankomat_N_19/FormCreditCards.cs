@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using WinFormBankomat_N_19.Models;
 
 namespace WinFormBankomat_N_19
 {
