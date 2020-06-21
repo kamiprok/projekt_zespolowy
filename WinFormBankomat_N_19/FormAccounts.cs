@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using WinFormBankomat_N_19.Models;
 
 namespace WinFormBankomat_N_19
 {
@@ -15,6 +16,10 @@ namespace WinFormBankomat_N_19
     {
         DataAccessLayer dal = new DataAccessLayer();
         SqlCommand sqlCommand = new SqlCommand();
+
+        private static string MISSING_VALUE = "Musisz podać obie wartości!";
+        private static string MUST_BE_DOUBLE = "Podana wartość musi być liczbą z maksymalnie 2 miejscami po przecinku!";
+        private static string ACCOUNT_DOES_NOT_EXIST = "Nie istnieje konto dla klienta o podanym numerze PESEL";
 
         public FormAccounts()
         {
@@ -149,12 +154,12 @@ namespace WinFormBankomat_N_19
 
             if (txtPeselDepo.Text.Length == 0 || txtAmountDepo.Text.Length == 0)
             {
-                labErrorInfo.Text = "Musisz podać obie wartości!";
+                labErrorInfo.Text = MISSING_VALUE;
                 labErrorInfo.ForeColor = Color.Red;
             }
             else if(!Double.TryParse(txtAmountDepo.Text, out amount))
             {
-                labErrorInfo.Text = "Podana wartość musi być liczbą z maksymalnie 2 miejscami po przecinku!";
+                labErrorInfo.Text = MUST_BE_DOUBLE;
                 labErrorInfo.ForeColor = Color.Red;
             }
             else
@@ -179,7 +184,7 @@ namespace WinFormBankomat_N_19
                     }
                     else
                     {
-                        labErrorInfo.Text = "Nie istnieje konto dla klienta o podanym numerze PESEL";
+                        labErrorInfo.Text = ACCOUNT_DOES_NOT_EXIST;
                         labErrorInfo.ForeColor = Color.Red;
                         return;
                     }
@@ -192,6 +197,9 @@ namespace WinFormBankomat_N_19
 
                     dal.queryExecution(sqlCmd);
                     dal.connectionClose();
+
+                    Transaction transaction = new Transaction(id, OperationType.Deposit, amount);
+                    transaction.LogTransaction();
 
                     RefreshDataGridView();
                 }        
@@ -207,12 +215,12 @@ namespace WinFormBankomat_N_19
 
             if (txtPeselDepo.Text.Length == 0 || txtAmountDepo.Text.Length == 0)
             {
-                labErrorInfo.Text = "Musisz podać obie wartości!";
+                labErrorInfo.Text = MISSING_VALUE;
                 labErrorInfo.ForeColor = Color.Red;
             }
             else if (!Double.TryParse(txtAmountDepo.Text, out amount))
             {
-                labErrorInfo.Text = "Podana wartość musi być liczbą z maksymalnie 2 miejscami po przecinku!";
+                labErrorInfo.Text = MUST_BE_DOUBLE;
                 labErrorInfo.ForeColor = Color.Red;
             }
             else
@@ -237,7 +245,7 @@ namespace WinFormBankomat_N_19
                     }
                     else
                     {
-                        labErrorInfo.Text = "Nie istnieje konto dla klienta o podanym numerze PESEL";
+                        labErrorInfo.Text = ACCOUNT_DOES_NOT_EXIST;
                         labErrorInfo.ForeColor = Color.Red;
 
                         return;
@@ -258,6 +266,9 @@ namespace WinFormBankomat_N_19
 
                         dal.queryExecution(sqlCmd2);
                         dal.connectionClose();
+
+                        Transaction transaction = new Transaction(id, OperationType.Withdrawal, amount);
+                        transaction.LogTransaction();
 
                         RefreshDataGridView();
                     }
