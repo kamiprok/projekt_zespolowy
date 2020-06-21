@@ -59,21 +59,21 @@ nazwa projektu: projekt bankomat
 		+ bank account
 		+ credit card
 		
-		lista osob i jakie maja role:
-		1.project manager
-		2.architekt
-		3.analityk biznesowy
-		4.Lead dev
-		5.developer
-		6.junior dev
-		7.Lead QA
-		8.tester
-		9.grafik
-		
-		co projekt ma robic: ma symulowac dzialanie bankomatu
-		to jest diagram use case
-		to jest diagram activity
-		to jest diagram sequence
+	lista osob i jakie maja role:
+	1.project manager
+	2.architekt
+	3.analityk biznesowy
+	4.Lead dev
+	5.developer
+	6.junior dev
+	7.Lead QA
+	8.tester
+	9.grafik
+	
+	co projekt ma robic: ma symulowac dzialanie bankomatu
+	to jest diagram use case
+	to jest diagram activity
+	to jest diagram sequence
 	
 	dodać 2 tabele
 	
