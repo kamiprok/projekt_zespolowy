@@ -42,13 +42,14 @@ namespace WinFormBankomat_N_19.Models
                 dal.connectionOpen();
                 dal.queryExecution(sqlCmd);
                 dal.connectionClose();
+
+                return 0;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 //Możliwość logowania wyjątków do pliku
                 return -1;
             }
-            return 0;
         }
     }
 }

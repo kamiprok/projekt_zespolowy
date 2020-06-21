@@ -14,7 +14,7 @@ namespace WinFormBankomat_N_19.Models
         {
         }
     }
-    class CreditCard
+    public class CreditCard
     {
         public int CardID { get; private set; }
         public string CardNo { get; private set; }

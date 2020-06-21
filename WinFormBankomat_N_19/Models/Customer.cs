@@ -7,7 +7,7 @@ using System.Data.SqlClient;
 
 namespace WinFormBankomat_N_19.Models
 {
-    class Customer
+    public class Customer
     {
         public int CustomerID { get; private set; }
         public string Name { get; set; }

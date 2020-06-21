@@ -121,7 +121,7 @@ namespace WinFormBankomat_N_19
             {
                 if (IsBankNote(depositAmount))
                 {
-                    int result = BankAccount.WithdrawMoney(depositAmount, _accountID, Convert.ToDouble(CheckBalance()));
+                    int result = BankAccount.DepositMoney(depositAmount, _accountID, Convert.ToDouble(CheckBalance()));
 
                     if (result == -1)
                     {

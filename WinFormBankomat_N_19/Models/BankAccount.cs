@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace WinFormBankomat_N_19.Models
 {
-    class BankAccount
+    public class BankAccount
     {
         public int AccountID { get; private set; }
         public int CustomerID { get; private set; }
@@ -18,6 +18,9 @@ namespace WinFormBankomat_N_19.Models
 
         public static int WithdrawMoney(int amount, int accountId, double currentBalance)
         {
+            if (amount > currentBalance) { return -1; }
+            else if (amount < 0) { return -1; }
+
             double newBalance = currentBalance - amount;
             string query = "update BankAccounts SET Balance = @newBalance WHERE AccountID = @id";
             SqlCommand sqlCmd = new SqlCommand();
@@ -25,9 +28,10 @@ namespace WinFormBankomat_N_19.Models
             sqlCmd.Parameters.AddWithValue("@newBalance", newBalance);
             sqlCmd.Parameters.AddWithValue("@id", accountId);
 
-            DataAccessLayer dal = new DataAccessLayer();
             try
             {
+                DataAccessLayer dal = new DataAccessLayer();
+
                 if (dal.connectionOpen())
                 {
                     dal.queryExecution(sqlCmd);
@@ -35,16 +39,19 @@ namespace WinFormBankomat_N_19.Models
                 }
                 Transaction transaction = new Transaction(accountId, OperationType.Withdrawal, amount);
                 transaction.LogTransaction();
+
+                return 0;
             }
             catch(Exception ex)
             {
                 return -1;
             }
-            return 0;
         } 
 
         public static int DepositMoney(int amount, int accountId, double currentBalance)
         {
+            if (amount < 0) { return -1; }
+
             double newBalance = currentBalance + amount;
             string query = "update BankAccounts SET Balance = @newBalance WHERE AccountID = @id";
             SqlCommand sqlCmd = new SqlCommand();
@@ -77,10 +84,10 @@ namespace WinFormBankomat_N_19.Models
 
         public int GetAccountID(long pesel)
         {
-            string query = "select AccountID, Balance from BankAccounts";
+            string query = "select b.AccountID, b.Balance from BankAccounts b left join Customers c on b.CustomerID = c.CustomerID where c.PersonalID = @pesel";
             SqlCommand sqlCommand = new SqlCommand();
             sqlCommand.CommandText = query;
-            //sqlCommand.Parameters.AddWithValue("@pesel", pesel);
+            sqlCommand.Parameters.AddWithValue("@pesel", pesel);
             DataAccessLayer dal = new DataAccessLayer();
 
             if (dal.connectionOpen())
