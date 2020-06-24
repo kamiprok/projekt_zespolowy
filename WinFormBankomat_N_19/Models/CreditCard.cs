@@ -33,10 +33,8 @@ namespace WinFormBankomat_N_19.Models
         public virtual Customer Customer { get; set; }
         public virtual BankAccount BankAccount { get; set; }
 
-        public CreditCard()
-        {
+        public CreditCard() { }
 
-        }
         public CreditCard(string cardNo)
         {
             string query = "select * from CreditCards where CardNo = @cardNo";
@@ -111,11 +109,6 @@ namespace WinFormBankomat_N_19.Models
             dal.connectionClose();
         }
 
-        public void VerifyCardNo()
-        {
-
-        }
-
         public bool VerifyExpiredDate(int cardNo)
         {
             string query = "select ExpiredDate from CreditCards where CardNo = @cardNo";
@@ -146,11 +139,6 @@ namespace WinFormBankomat_N_19.Models
             {
                 return true;
             }
-        }
-
-        public void VerifyPIN()
-        {
-
         }
 
         public int GetCardID(string cardNo)
