@@ -142,6 +142,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <None Include="Diagrams\activity_diagram.pdf" />
+    <None Include="Diagrams\class_diagram.pdf" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -165,6 +166,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <DependentUpon>Database1.mdf</DependentUpon>
     </Content>
+    <Content Include="Diagrams\db_schema.png" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.6.1">
